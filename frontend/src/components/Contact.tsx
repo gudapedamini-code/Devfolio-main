@@ -4,9 +4,36 @@ import type { Variants } from "framer-motion";
 import { Mail, Phone, MapPin, Linkedin, Github, Send, MessageSquare, ExternalLink } from "lucide-react";
 import { getProfile } from "../lib/api";
 import type { Profile } from "../lib/types";
+import { portfolioData } from "../data/portfolioData";
 
 export default function Contact() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile | null>({
+    name: portfolioData.personal.fullName,
+    title: portfolioData.personal.title,
+    bio: portfolioData.personal.bio,
+    location: portfolioData.personal.location,
+    contact: {
+      email: portfolioData.contact.email,
+      linkedin: portfolioData.contact.linkedin,
+      github: portfolioData.contact.github,
+      phone: portfolioData.contact.phone,
+    },
+    resume: {
+      url: portfolioData.personal.resumePdf,
+      filename: "Damini_Gudape_Resume.pdf",
+      uploadedAt: new Date(),
+    },
+    skills: [],
+    experience: [],
+    education: [],
+    achievements: [],
+    stats: {
+      gfgProblems: "",
+      maxRating: "",
+      rank: "",
+      youtubeSubscribers: "",
+    },
+  });
 
   useEffect(() => {
     getProfile().then(setProfile);

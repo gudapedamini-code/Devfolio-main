@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { portfolioData } from "../data/portfolioData";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -62,7 +63,7 @@ export default function Header() {
 
           <div className="relative px-4 py-2">
             <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] group-hover:drop-shadow-[0_0_12px_rgba(59,130,246,1)] transition-all duration-300">
-              Shubham.dev
+              {portfolioData.personal.logoTitle}
             </span>
             {/* Animated underline */}
             <motion.div

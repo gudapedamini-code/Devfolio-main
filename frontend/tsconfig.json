@@ -11,9 +11,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": { "@/*": ["frontend/src/*"] }
+    "paths": { "@/*": ["src/*"] }
   },
-  "include": ["frontend/src"],
+  "include": ["src"],
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

@@ -8,10 +8,11 @@ import ProjectCard from "../components/ProjectCard";
 import Contact from "../components/Contact";
 import DemoEmbed from "../components/DemoEmbed";
 import { getProjects, getProjectBySlug } from "../lib/api";
+import { portfolioData } from "../data/portfolioData";
 import type { Project } from "../lib/types";
 
 export default function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(portfolioData.projects);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showProjectDetail, setShowProjectDetail] = useState(false);
 
@@ -348,56 +349,53 @@ export default function Home() {
             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-400 via-pink-500 to-transparent hidden md:block" />
 
             <div className="space-y-12">
-              {/* OrderHub Experience */}
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="relative glass p-8 ml-0 md:ml-16 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 border border-white/10 group"
-              >
-                <div className="absolute -left-4 top-8 w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full border-4 border-slate-900 hidden md:block group-hover:scale-125 transition-transform duration-300 shadow-lg shadow-purple-500/50" />
-                <div className="flex items-start gap-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25">
-                    <Briefcase size={28} className="text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
-                      React Native Developer
-                    </h3>
-                    <p className="text-purple-400 font-semibold text-lg mb-2">
-                      OrderHub - Ecommerce Store Management
-                    </p>
-                    <p className="text-slate-400 flex items-center gap-2 mb-6">
-                      <Calendar size={16} />
-                      Dec 2024 - Jan 2025
-                    </p>
-                    <div className="grid gap-4">
-                      {[
-                        "Collaborated with stakeholders to define app flows and create user journeys through detailed Figma wireframes",
-                        "Designed intuitive UI screens following Google's Material Design system for cross-platform consistency",
-                        "Planned multi-channel order management (WhatsApp, Telegram), PhonePe payment verification, and real-time updates",
-                        "Focused on designing scalable flows, taking inspiration from distributed system concepts",
-                      ].map((desc, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <span className="text-white text-xs font-bold">
-                              ✓
-                            </span>
-                          </div>
-                          <span className="text-slate-300">{desc}</span>
-                        </motion.div>
-                      ))}
+              {portfolioData.experience.map((exp, expIdx) => (
+                <motion.div
+                  key={exp.company}
+                  variants={itemVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="relative glass p-8 ml-0 md:ml-16 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 border border-white/10 group"
+                >
+                  <div className="absolute -left-4 top-8 w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full border-4 border-slate-900 hidden md:block group-hover:scale-125 transition-transform duration-300 shadow-lg shadow-purple-500/50" />
+                  <div className="flex items-start gap-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25">
+                      <Briefcase size={28} className="text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
+                        {exp.role}
+                      </h3>
+                      <p className="text-purple-400 font-semibold text-lg mb-2">
+                        {exp.company}
+                      </p>
+                      <p className="text-slate-400 flex items-center gap-2 mb-6">
+                        <Calendar size={16} />
+                        {exp.duration}
+                      </p>
+                      <div className="grid gap-4">
+                        {exp.description.map((desc, index) => (
+                          <motion.div
+                            key={index}
+                            className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                          >
+                            <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <span className="text-white text-xs font-bold">
+                                ✓
+                              </span>
+                            </div>
+                            <span className="text-slate-300">{desc}</span>
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              ))}
             </div>
 
             {/* Leadership Section */}
@@ -409,45 +407,41 @@ export default function Home() {
               className="mt-16"
             >
               <h3 className="text-3xl font-bold text-white mb-8 text-center">
-                Leadership & Initiative
+                Engineering Practices & Milestones
               </h3>
               <div className="grid md:grid-cols-2 gap-8">
-                {/* YouTube Channel */}
+                {/* Engineering Highlights */}
                 <motion.div
                   variants={itemVariants}
-                  className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-red-400/20 transition-all duration-500 border border-white/10 group"
+                  className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-cyan-400/20 transition-all duration-500 border border-white/10 group"
                 >
                   <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-red-500/25">
-                      <span className="text-white font-bold text-2xl">▶</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/25">
+                      <Code size={28} className="text-white" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors duration-300">
-                        Founder, YouTube Channel
+                      <h4 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+                        {portfolioData.leadership.title}
                       </h4>
-                      <p className="text-red-400 font-semibold">
-                        "Story Network" (250K+ Subscribers)
+                      <p className="text-cyan-400 font-semibold">
+                        {portfolioData.leadership.subtitle}
                       </p>
                     </div>
                   </div>
                   <p className="text-slate-300 leading-relaxed">
-                    Scaled channel from scratch by managing creators and
-                    executing engagement-driven strategies, boosting viewership
-                    by 40%
+                    {portfolioData.leadership.description}
                   </p>
                   <div className="mt-4 flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-2 text-red-400">
-                      <Globe size={16} />
-                      <span>250K+ Reach</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-orange-400">
-                      <Trophy size={16} />
-                      <span>40% Growth</span>
-                    </div>
+                    {portfolioData.leadership.stats.map((st, i) => (
+                      <div key={i} className="flex items-center gap-2 text-cyan-400">
+                        <Target size={16} />
+                        <span>{st.label}: {st.value}</span>
+                      </div>
+                    ))}
                   </div>
                 </motion.div>
 
-                {/* Team Leadership */}
+                {/* Internships & Milestones */}
                 <motion.div
                   variants={itemVariants}
                   className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-yellow-400/20 transition-all duration-500 border border-white/10 group"
@@ -458,42 +452,30 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                       <h4 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors duration-300">
-                        Team Lead - National Hackathons
+                        Internship Milestones
                       </h4>
                       <p className="text-yellow-400 font-semibold">
-                        Multiple Wins (2025)
+                        Agrozone & CodeAlpha (2026)
                       </p>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <motion.div
-                      className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <div className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-white text-xs font-bold">🥈</span>
-                      </div>
-                      <span className="text-slate-300">
-                        JobIt - AI job prep app, 1st Runner-Up at Hackspectra
-                        (50+ teams)
-                      </span>
-                    </motion.div>
-                    <motion.div
-                      className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <div className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-white text-xs font-bold">🥈</span>
-                      </div>
-                      <span className="text-slate-300">
-                        CampusCore - College management app, 1st Runner-Up at
-                        Hack Fusion (100+ teams)
-                      </span>
-                    </motion.div>
+                    {portfolioData.hackathons.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (index + 1) * 0.1 }}
+                      >
+                        <div className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-white text-xs font-bold">{item.icon}</span>
+                        </div>
+                        <span className="text-slate-300">
+                          <strong className="text-white">{item.title}</strong> — {item.description}
+                        </span>
+                      </motion.div>
+                    ))}
                   </div>
                 </motion.div>
               </div>
@@ -528,145 +510,51 @@ export default function Home() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid md:grid-cols-3 gap-8"
+              className="grid md:grid-cols-1 max-w-3xl mx-auto gap-8"
             >
-              {/* Bachelor's Degree */}
-              <motion.div variants={itemVariants} className="group">
-                <div className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 border border-white/10 group-hover:border-emerald-400/30 h-full">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-emerald-500/25">
-                      <GraduationCap size={28} className="text-white" />
+              {portfolioData.education.map((edu, idx) => (
+                <motion.div key={idx} variants={itemVariants} className="group">
+                  <div className="glass p-8 md:p-10 rounded-2xl hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 border border-white/10 group-hover:border-emerald-400/30 h-full">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-emerald-500/25">
+                        <GraduationCap size={28} className="text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                          {edu.degree}
+                        </h3>
+                        {edu.field && (
+                          <p className="text-emerald-400 font-semibold text-lg">
+                            {edu.field}
+                          </p>
+                        )}
+                        <p className="text-slate-400 flex items-center gap-2 mt-2">
+                          <Calendar size={16} />
+                          {edu.duration}
+                        </p>
+                        <p className="text-slate-400 flex items-center gap-2 mt-1">
+                          <MapPin size={16} />
+                          {edu.institution}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
-                        B.Tech CSE
-                      </h3>
-                      <p className="text-emerald-400 font-semibold text-lg">
-                        Computer Science & Engineering
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-2">
-                        <Calendar size={16} />
-                        2022 - 2026
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-1">
-                        <MapPin size={16} />
-                        SGGSIE&T, Nanded
-                      </p>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { label: "CGPA: 8.65/10", icon: "🎯" },
-                      {
-                        label: "Specialized in Mobile Development",
-                        icon: "📱",
-                      },
-                      { label: "Active in Hackathons", icon: "🏆" },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex items-center gap-3 p-2 bg-white/5 rounded-lg border border-white/10"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        <span className="text-lg">{item.icon}</span>
-                        <span className="text-slate-300">{item.label}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* 12th Grade */}
-              <motion.div variants={itemVariants} className="group">
-                <div className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-500 border border-white/10 group-hover:border-teal-400/30 h-full">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-teal-500/25">
-                      <Award size={28} className="text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors duration-300">
-                        12th Grade
-                      </h3>
-                      <p className="text-teal-400 font-semibold text-lg">
-                        Science Stream
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-2">
-                        <Calendar size={16} />
-                        2020 - 2021
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-1">
-                        <MapPin size={16} />
-                        Vidhyadham Prashala, Pune
-                      </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {edu.highlights.map((item, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <span className="text-lg">{item.icon}</span>
+                          <span className="text-slate-300 font-medium">{item.label}</span>
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
-                  <div className="space-y-3">
-                    {[
-                      { label: "Percentage: 84.83%", icon: "📊" },
-                      { label: "PCM Stream", icon: "🔬" },
-                      { label: "Strong Foundation", icon: "💪" },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex items-center gap-3 p-2 bg-white/5 rounded-lg border border-white/10"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        <span className="text-lg">{item.icon}</span>
-                        <span className="text-slate-300">{item.label}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* 10th Grade */}
-              <motion.div variants={itemVariants} className="group">
-                <div className="glass p-8 rounded-2xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 border border-white/10 group-hover:border-cyan-400/30 h-full">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/25">
-                      <Star size={28} className="text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                        10th Grade
-                      </h3>
-                      <p className="text-cyan-400 font-semibold text-lg">
-                        Secondary School
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-2">
-                        <Calendar size={16} />
-                        2018 - 2019
-                      </p>
-                      <p className="text-slate-400 flex items-center gap-2 mt-1">
-                        <MapPin size={16} />
-                        S.S.R.B Gujar Prashala, Pune
-                      </p>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { label: "Percentage: 92%", icon: "⭐" },
-                      { label: "School Topper", icon: "🥇" },
-                      { label: "Academic Excellence", icon: "🎓" },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex items-center gap-3 p-2 bg-white/5 rounded-lg border border-white/10"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        <span className="text-lg">{item.icon}</span>
-                        <span className="text-slate-300">{item.label}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -683,13 +571,12 @@ export default function Home() {
             className="text-center mb-16 relative z-10"
           >
             <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 bg-clip-text text-transparent mb-6">
-              Problem Solving Excellence
+              Technical Expertise
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto mb-6 rounded-full" />
             <p className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed">
-              Competitive programming achievements and technical expertise
-              across multiple platforms, demonstrating consistent
-              problem-solving capabilities
+              Hands-on experience across frontend, backend, APIs, databases,
+              and cloud deployment
             </p>
           </motion.div>
 
@@ -705,18 +592,18 @@ export default function Home() {
               <motion.div variants={itemVariants} className="group">
                 <div className="glass p-8 rounded-2xl text-center hover:shadow-2xl hover:shadow-green-400/20 transition-all duration-500 border border-white/10 group-hover:border-green-400/30 group-hover:scale-105">
                   <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl mx-auto mb-6 flex items-center justify-center group-hover:rotate-6 transition-transform duration-300 shadow-lg shadow-green-500/25">
-                    <span className="text-3xl font-bold text-white">G</span>
+                    <span className="text-3xl font-bold text-white">FS</span>
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-green-400 transition-colors duration-300">
-                    GeeksforGeeks
+                    Full-Stack Apps
                   </h3>
-                  <p className="text-4xl font-bold text-green-400 mb-2">460+</p>
-                  <p className="text-slate-400">Problems Solved</p>
+                  <p className="text-4xl font-bold text-green-400 mb-2">5+</p>
+                  <p className="text-slate-400">Deployed Web Projects</p>
                   <div className="mt-3 w-full bg-slate-700 rounded-full h-2">
                     <motion.div
                       className="h-2 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"
                       initial={{ width: 0 }}
-                      whileInView={{ width: "85%" }}
+                      whileInView={{ width: "90%" }}
                       transition={{ duration: 1.5, delay: 0.5 }}
                     />
                   </div>
@@ -729,15 +616,15 @@ export default function Home() {
                     <Star size={32} className="text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
-                    Max Rating
+                    B.E. CGPA
                   </h3>
-                  <p className="text-4xl font-bold text-blue-400 mb-2">1532</p>
-                  <p className="text-slate-400">Contest Rating</p>
+                  <p className="text-4xl font-bold text-blue-400 mb-2">7.33</p>
+                  <p className="text-slate-400">Computer Science</p>
                   <div className="mt-3 w-full bg-slate-700 rounded-full h-2">
                     <motion.div
                       className="h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
                       initial={{ width: 0 }}
-                      whileInView={{ width: "76%" }}
+                      whileInView={{ width: "75%" }}
                       transition={{ duration: 1.5, delay: 0.7 }}
                     />
                   </div>
@@ -750,12 +637,12 @@ export default function Home() {
                     <Trophy size={32} className="text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors duration-300">
-                    Institute Rank
+                    College
                   </h3>
-                  <p className="text-4xl font-bold text-purple-400 mb-2">
-                    Top 50
+                  <p className="text-2xl font-bold text-purple-400 mb-2">
+                    COET Akola
                   </p>
-                  <p className="text-slate-400">DSA Ranking</p>
+                  <p className="text-slate-400">Class of 2026</p>
                   <div className="mt-3 w-full bg-slate-700 rounded-full h-2">
                     <motion.div
                       className="h-2 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"
@@ -770,13 +657,13 @@ export default function Home() {
               <motion.div variants={itemVariants} className="group">
                 <div className="glass p-8 rounded-2xl text-center hover:shadow-2xl hover:shadow-red-400/20 transition-all duration-500 border border-white/10 group-hover:border-red-400/30 group-hover:scale-105">
                   <div className="w-20 h-20 bg-gradient-to-br from-red-400 to-orange-500 rounded-2xl mx-auto mb-6 flex items-center justify-center group-hover:rotate-6 transition-transform duration-300 shadow-lg shadow-red-500/25">
-                    <Globe size={32} className="text-white" />
+                    <Briefcase size={32} className="text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
-                    YouTube
+                    Internships
                   </h3>
-                  <p className="text-4xl font-bold text-red-400 mb-2">250K+</p>
-                  <p className="text-slate-400">Subscribers</p>
+                  <p className="text-4xl font-bold text-red-400 mb-2">2</p>
+                  <p className="text-slate-400">Agrozone & CodeAlpha</p>
                   <div className="mt-3 w-full bg-slate-700 rounded-full h-2">
                     <motion.div
                       className="h-2 bg-gradient-to-r from-red-400 to-orange-500 rounded-full"
@@ -802,86 +689,22 @@ export default function Home() {
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
                 {[
-                  {
-                    name: "Kotlin",
-                    color: "from-purple-400 to-violet-500",
-                    icon: "K",
-                  },
-                  {
-                    name: "Java",
-                    color: "from-orange-400 to-red-500",
-                    icon: "J",
-                  },
-                  {
-                    name: "JavaScript",
-                    color: "from-yellow-400 to-orange-500",
-                    icon: "JS",
-                  },
-                  {
-                    name: "C++",
-                    color: "from-blue-400 to-indigo-500",
-                    icon: "C++",
-                  },
-                  {
-                    name: "Python",
-                    color: "from-green-400 to-emerald-500",
-                    icon: "PY",
-                  },
-                  {
-                    name: "SQL",
-                    color: "from-cyan-400 to-blue-500",
-                    icon: "SQL",
-                  },
-                  {
-                    name: "Android SDK",
-                    color: "from-green-500 to-teal-500",
-                    icon: "A",
-                  },
-                  {
-                    name: "Jetpack Compose",
-                    color: "from-blue-500 to-cyan-600",
-                    icon: "JC",
-                  },
-                  {
-                    name: "React Native",
-                    color: "from-cyan-400 to-blue-600",
-                    icon: "RN",
-                  },
-                  {
-                    name: "React.js",
-                    color: "from-cyan-400 to-blue-600",
-                    icon: "R",
-                  },
-                  {
-                    name: "Node.js",
-                    color: "from-green-500 to-teal-500",
-                    icon: "N",
-                  },
-                  {
-                    name: "Firebase",
-                    color: "from-yellow-500 to-orange-600",
-                    icon: "F",
-                  },
-                  {
-                    name: "MongoDB",
-                    color: "from-green-600 to-emerald-600",
-                    icon: "M",
-                  },
-                  {
-                    name: "Git",
-                    color: "from-orange-500 to-red-600",
-                    icon: "G",
-                  },
-                  {
-                    name: "Docker",
-                    color: "from-blue-500 to-cyan-600",
-                    icon: "D",
-                  },
-                  {
-                    name: "Figma",
-                    color: "from-purple-500 to-pink-600",
-                    icon: "Fi",
-                  },
+                  { name: "React.js", color: "from-cyan-400 to-blue-600", icon: "R" },
+                  { name: "Node.js", color: "from-green-500 to-teal-500", icon: "N" },
+                  { name: "Express.js", color: "from-gray-500 to-slate-700", icon: "EX" },
+                  { name: "MongoDB", color: "from-green-600 to-emerald-600", icon: "M" },
+                  { name: "JavaScript", color: "from-yellow-400 to-orange-500", icon: "JS" },
+                  { name: "Tailwind CSS", color: "from-cyan-400 to-teal-500", icon: "TW" },
+                  { name: "REST APIs", color: "from-purple-500 to-indigo-600", icon: "API" },
+                  { name: "JWT Auth", color: "from-pink-500 to-rose-600", icon: "JWT" },
+                  { name: "MySQL", color: "from-blue-500 to-cyan-600", icon: "SQL" },
+                  { name: "Firebase", color: "from-yellow-500 to-orange-600", icon: "FB" },
+                  { name: "Java", color: "from-orange-400 to-red-500", icon: "J" },
+                  { name: "Python", color: "from-green-400 to-emerald-500", icon: "PY" },
+                  { name: "HTML5/CSS3", color: "from-orange-500 to-amber-600", icon: "H5" },
+                  { name: "Git & GitHub", color: "from-orange-500 to-red-600", icon: "G" },
+                  { name: "Vercel", color: "from-slate-700 to-black", icon: "▲" },
+                  { name: "Postman", color: "from-orange-400 to-amber-500", icon: "PM" },
                 ].map((skill, index) => (
                   <motion.div
                     key={skill.name}
@@ -927,12 +750,11 @@ export default function Home() {
                 className="mb-8"
               >
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">
-                  Shubham.dev
+                  {portfolioData.personal.logoTitle}
                 </h3>
                 <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                  Crafting digital experiences with passion, precision, and
-                  innovation. Always eager to collaborate on exciting projects
-                  and bring ideas to life.
+                  Building scalable web applications, robust client-server architectures,
+                  and impactful digital products. Always open to new opportunities.
                 </p>
               </motion.div>
 
@@ -946,23 +768,18 @@ export default function Home() {
                 {[
                   {
                     name: "LinkedIn",
-                    url: "https://linkedin.com/in/shubham-rajurpalle",
+                    url: portfolioData.contact.linkedin,
                     color: "hover:text-blue-400",
                   },
                   {
                     name: "GitHub",
-                    url: "https://github.com/Shubham-Rajurpalle",
+                    url: portfolioData.contact.github,
                     color: "hover:text-gray-300",
                   },
                   {
                     name: "Email",
-                    url: "mailto:rajurpalleshubham1802@gmail.com",
+                    url: `mailto:${portfolioData.contact.email}`,
                     color: "hover:text-cyan-400",
-                  },
-                  {
-                    name: "YouTube",
-                    url: "https://www.youtube.com/@storynetwork",
-                    color: "hover:text-red-400",
                   },
                 ].map((link) => (
                   <motion.a
@@ -990,7 +807,7 @@ export default function Home() {
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
                 >
-                  © 2025 Shubham Rajurpalle. Built with React, TypeScript &
+                  © 2026 {portfolioData.personal.fullName}. Built with React, TypeScript &
                   Framer Motion.
                 </motion.p>
                 <motion.div

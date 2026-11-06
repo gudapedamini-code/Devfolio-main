@@ -9,6 +9,7 @@ import {
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
 import { downloadResume } from "../lib/api";
+import { portfolioData } from "../data/portfolioData";
 
 // Innovative 3D Scene with Glass Morphism
 function InnovativeGeometry() {
@@ -278,9 +279,9 @@ export default function Hero3D() {
               transition={{ duration: 4, repeat: Infinity }}
             />
             <h1 className="relative text-6xl md:text-7xl lg:text-8xl font-black tracking-tight">
-              <span className="block text-white mb-2">Shubham</span>
+              <span className="block text-white mb-2">{portfolioData.personal.firstName}</span>
               <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Rajurpalle
+                {portfolioData.personal.lastName}
               </span>
             </h1>
           </motion.div>
@@ -293,7 +294,7 @@ export default function Hero3D() {
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-300"
           >
             <AdvancedTypingAnimation 
-              text="Android & Full Stack Developer"
+              text={portfolioData.personal.title}
               className="text-slate-300"
             />
           </motion.div>
@@ -305,7 +306,7 @@ export default function Hero3D() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            Building Scalable Mobile & Web Solutions
+            {portfolioData.personal.tagline}
           </motion.p>
 
           {/* Enhanced bio */}
@@ -315,9 +316,7 @@ export default function Hero3D() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
           >
-            Specialized in Android development with Kotlin, React Native for
-            cross-platform apps, and full-stack web development. Passionate
-            about creating efficient, user-centric digital solutions.
+            {portfolioData.personal.bio}
           </motion.p>
 
           {/* Tech stack badges */}
@@ -327,28 +326,7 @@ export default function Hero3D() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8 }}
           >
-            {[
-              {
-                name: "Android",
-                icon: "🚀",
-                color: "from-purple-500 to-blue-500",
-              },
-              {
-                name: "React Native",
-                icon: "⚛️",
-                color: "from-blue-500 to-cyan-500",
-              },
-              {
-                name: "Full Stack",
-                icon: "🛠️",
-                color: "from-cyan-500 to-green-500",
-              },
-              {
-                name: "Firebase",
-                icon: "🔥",
-                color: "from-orange-500 to-red-500",
-              },
-            ].map((tech, i) => (
+            {portfolioData.heroBadges.map((tech, i) => (
               <motion.div
                 key={tech.name}
                 className={`px-4 py-2 bg-gradient-to-r ${tech.color} rounded-full text-white font-medium text-sm shadow-lg`}
@@ -451,8 +429,8 @@ export default function Hero3D() {
                   <div className="w-full h-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center relative overflow-hidden">
                     
                     <img
-                      src="/profile-photo.jpg"
-                      alt="Shubham Rajurpalle"
+                      src={portfolioData.personal.profilePhoto}
+                      alt={portfolioData.personal.fullName}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -466,7 +444,7 @@ export default function Hero3D() {
                 transition={{ duration: 3, repeat: Infinity, delay: 0 }}
               >
                 <span className="text-cyan-300 font-semibold text-sm">
-                  Android Dev
+                  Full Stack
                 </span>
               </motion.div>
 
@@ -476,7 +454,7 @@ export default function Hero3D() {
                 transition={{ duration: 3, repeat: Infinity, delay: 1 }}
               >
                 <span className="text-purple-300 font-semibold text-sm">
-                  Full Stack
+                  React.js
                 </span>
               </motion.div>
 
@@ -486,7 +464,7 @@ export default function Hero3D() {
                 transition={{ duration: 3, repeat: Infinity, delay: 2 }}
               >
                 <span className="text-blue-300 font-semibold text-sm">
-                  React Native
+                  Node & APIs
                 </span>
               </motion.div>
             </div>
@@ -494,32 +472,7 @@ export default function Hero3D() {
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
-            {[
-              {
-                value: "460+",
-                label: "DSA Problems",
-                sublabel: "GeeksforGeeks",
-                color: "from-emerald-400 to-teal-500",
-              },
-              {
-                value: "250K+",
-                label: "Subscribers",
-                sublabel: "YouTube Channel",
-                color: "from-red-400 to-orange-500",
-              },
-              {
-                value: "2x",
-                label: "Winner",
-                sublabel: "National Hackathons",
-                color: "from-yellow-400 to-orange-500",
-              },
-              {
-                value: "2+",
-                label: "Years Exp",
-                sublabel: "Mobile Development",
-                color: "from-purple-400 to-pink-500",
-              },
-            ].map((stat, i) => (
+            {portfolioData.heroStats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 className="group relative p-4 glass border border-white/10 rounded-xl hover:border-white/20 transition-all duration-500"

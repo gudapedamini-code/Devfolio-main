@@ -14,14 +14,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://devfolio-six-omega.vercel.app",
+  "https://shubham-devfolio.vercel.app",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL || "http://localhost:5173",
-      "https://*.vercel.app", // Allow all Vercel preview deployments
-      "http://localhost:3000", // Additional origins
-      "https://devfolio-six-omega.vercel.app", // Remove trailing slash
-    ],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      // Allow any vercel.app preview or production deployment, localhost, or configured URLs
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app") ||
+        origin.startsWith("http://localhost:")
+      ) {
+        return callback(null, true);
+      }
+
+      // Allow all for public portfolio API
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
@@ -71,30 +89,68 @@ async function initializeDefaultData() {
     if (profileCount === 0) {
       console.log("🔧 Creating default profile...");
       await Profile.create({
-        name: "Shubham Rajurpalle",
-        title: "Android & Full Stack Developer",
-        bio: "Mobile-first engineer specializing in Android and React Native development.",
-        location: "Nanded, Maharashtra, India",
+        name: "Damini Ganesh Gudape",
+        title: "Product Engineer | Full-Stack Developer",
+        bio: "Computer Science graduate (2026) and Full-Stack Developer experienced in React.js, Node.js, Express.js, and MongoDB.",
+        location: "Maharashtra, India",
         contact: {
-          email: "rajurpalleshubham1802@gmail.com",
-          linkedin: "https://linkedin.com/in/shubham-rajurpalle",
-          github: "https://github.com/Shubham-Rajurpalle",
-          phone: "+91-9834583910",
+          email: "gudapedamini@gmail.com",
+          linkedin: "https://linkedin.com/in/damini-gudape",
+          github: "https://github.com/gudapedamini-code",
+          phone: "+91-9322424879",
         },
         resume: {
-          url: "/static/Software_engineer_shubham_rajurpalle.pdf",
-          filename: "Software_engineer_shubham_rajurpalle.pdf",
+          url: "/static/Damini_Gudape_Resume.pdf",
+          filename: "Damini_Gudape_Resume.pdf",
           uploadedAt: new Date(),
         },
-        skills: ["Android", "Kotlin", "React Native", "Firebase", "Node.js"],
-        experience: [],
-        education: [],
-        achievements: [],
+        skills: [
+          "React.js",
+          "Node.js",
+          "Express.js",
+          "MongoDB",
+          "JavaScript",
+          "REST APIs",
+          "Tailwind CSS",
+          "JWT Auth",
+        ],
+        experience: [
+          {
+            company: "Agrozone Technology Pvt. Ltd.",
+            role: "Java Full Stack Developer Intern",
+            duration: "2026",
+            description: [
+              "Contributed to AI-driven and full-stack application development using React.js, Node.js, Express.js, and MongoDB.",
+              "Worked on implementing application features, integrating REST APIs, debugging issues, and improving existing workflows.",
+            ],
+          },
+          {
+            company: "CodeAlpha",
+            role: "Full Stack Web Developer Intern",
+            duration: "2026",
+            description: [
+              "Built responsive web application interfaces using HTML, CSS, and JavaScript, and connected UI components with backend logic.",
+            ],
+          },
+        ],
+        education: [
+          {
+            institution: "College of Engineering and Technology, Akola",
+            degree: "Bachelor of Engineering (B.E.)",
+            field: "Computer Science & Engineering",
+            cgpa: "7.33",
+            year: "2022 - 2026",
+          },
+        ],
+        achievements: [
+          "Java Full Stack Developer Intern at Agrozone Technology Pvt. Ltd.",
+          "Full Stack Web Developer Intern at CodeAlpha",
+        ],
         stats: {
-          gfgProblems: "460+",
-          maxRating: "1532",
-          rank: "Top 50",
-          youtubeSubscribers: "250K+",
+          gfgProblems: "500+",
+          maxRating: "7.33",
+          rank: "COET Akola",
+          youtubeSubscribers: "2 Completed",
         },
       });
     }
@@ -105,16 +161,45 @@ async function initializeDefaultData() {
       console.log("🔧 Creating default projects...");
       await Project.create([
         {
-          title: "CricXone",
-          slug: "cricxone",
-          role: "Application Developer",
+          title: "Medical Vendor Management System",
+          slug: "medical-vendor",
+          role: "Full Stack Developer",
           short:
-            "Real-Time Cricket Fan Engagement App with live scores and chat",
-          tech: ["Android", "Kotlin", "Firebase", "Coroutines"],
+            "Web-based management platform covering vendors, medical stores, doctors, products, sales transactions, and incentives.",
+          tech: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs"],
           highlights: [
-            "Optimized RecyclerView with DiffUtil, reducing API calls by 30%",
-            "Built custom chat and moderation system",
+            "Developed full-featured system covering vendors, medical stores, doctors, sales transactions, and incentives",
+            "Connected responsive frontend workflows with backend REST services",
           ],
+          cover: "/fallback-hero.png",
+          demo: {
+            type: "snack",
+            url: "https://medical-vendor-web.vercel.app",
+          },
+          repo: "https://github.com/gudapedamini-code",
+          liveUrl: "https://medical-vendor-web.vercel.app",
+          featured: true,
+          duration: "2026",
+        },
+        {
+          title: "DevFolio – Full-Stack Portfolio Platform",
+          slug: "devfolio",
+          role: "Full Stack Developer",
+          short:
+            "Production-ready MERN portfolio platform with JWT authentication and dynamic content management.",
+          tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Tailwind CSS"],
+          highlights: [
+            "Built and deployed a MERN portfolio platform with JWT-protected admin access",
+            "Integrated Cloudinary for image uploads and created responsive React components",
+          ],
+          cover: "/fallback-hero.png",
+          repo: "https://github.com/gudapedamini-code/devfolio",
+          liveUrl: "https://devfolio-six-omega.vercel.app",
+          featured: true,
+          duration: "2025",
+        },
+      ]);
+    }
           cover: "/static/fallback-hero.png",
           demo: {
             type: "appetize",

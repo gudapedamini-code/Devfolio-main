@@ -1,8 +1,12 @@
 import axios from "axios";
 import type { Project, Profile, ContactForm } from "./types";
+import { portfolioData } from "../data/portfolioData";
 
 // Use environment variable or fallback to local development
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.VITE_API_BASE ||
+  "http://localhost:4000";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -104,12 +108,12 @@ export async function submitContactForm(
 // --- Resume API ---
 export async function downloadResume(): Promise<void> {
   try {
-    const resumeUrl = "/Software_engineer_shubham_rajurpalle.pdf"; // Direct path to public folder
+    const resumeUrl = portfolioData.personal.resumePdf || "/Damini_Gudape_Resume.pdf";
     console.log(`📡 Downloading resume from: ${resumeUrl}`);
 
     const link = document.createElement("a");
     link.href = resumeUrl;
-    link.download = "Software_engineer_shubham_rajurpalle.pdf";
+    link.download = "Damini_Gudape_Resume.pdf";
     link.target = "_blank";
     document.body.appendChild(link);
     link.click();
@@ -123,7 +127,7 @@ export async function downloadResume(): Promise<void> {
     } catch (fallbackError) {
       console.error("❌ Fallback download also failed:", fallbackError);
       // Final fallback: direct public folder access
-      window.open("/Software_engineer_shubham_rajurpalle.pdf", "_blank");
+      window.open(portfolioData.personal.resumePdf || "/Damini_Gudape_Resume.pdf", "_blank");
     }
   }
 }
@@ -142,194 +146,51 @@ export async function checkHealth(): Promise<boolean> {
 
 // --- Fallback data ---
 function getFallbackProjects(): Project[] {
-  return [
-    {
-      title: "CricXone",
-      slug: "cricxone",
-      role: "Application Developer",
-      short: "Real-Time Cricket Fan Engagement App with live scores and chat",
-      tech: [
-        "Android",
-        "Kotlin",
-        "Firebase",
-        "Coroutines",
-        "RecyclerView",
-        "DiffUtil",
-      ],
-      highlights: [
-        "Developed live scores, video feeds, news, chat, and meme sharing features",
-        "Implemented custom chat and meme system supporting media, polls, deletions, and moderation",
-        "Designed engagement tracker ranking users and teams to boost participation",
-        "Optimized RecyclerView with DiffUtil and caching, reducing API calls by 30%",
-        "Simulated event-driven architecture for real-time updates",
-      ],
-      cover: "/cricxone_logo.jpg",
-      demo: {
-        type: "appetize",
-        url: "https://appetize.io/app/b_inc3wwr2nmcjpzqivlnpkzrl64",
-      },
-      repo: "https://github.com/Shubham-Rajurpalle/CricXone",
-      featured: true,
-      duration: "May 2024 - May 2025",
-    },
-    {
-      title: "CampusCore",
-      slug: "campuscore",
-      role: "Mobile App Developer",
-      short: "Smart College Management System with role-based access",
-      tech: [
-        "Android",
-        "Kotlin",
-        "Firebase Auth",
-        "Firestore",
-        "Coroutines",
-        "LiveData",
-        "QR Scanner",
-      ],
-      highlights: [
-        "Led development of role-based campus app for students, faculty, dean, doctor, and security",
-        "Deployed QR code login and real-time misconduct reporting across admin hierarchy",
-        "Integrated modules for elections, complaints, booking, and notifications",
-        "Optimized performance using LiveData and coroutines with Firestore sync",
-        "Built reporting flows resembling compliance monitoring pipelines",
-      ],
-      cover: "/campuscore.jpg",
-      demo: {
-        type: "appetize",
-        url: "https://appetize.io/app/b_mgurgbgitawf5mlnkzfjxfhxm4",
-      },
-      repo: "https://github.com/Shubham-Rajurpalle/HackFusion",
-      featured: true,
-      duration: "Feb 2025 - Mar 2025",
-    },
-    {
-      title: "JobIt",
-      slug: "jobit",
-      role: "Android App Developer",
-      short: "AI-Powered Job Prep and Resume Tailoring App",
-      tech: [
-        "Android",
-        "Kotlin",
-        "Firebase",
-        "Gemini API",
-        "Kommunicate SDK",
-        "ML",
-      ],
-      highlights: [
-        "Directed team to create AI-powered app for job discovery and resume tailoring",
-        "Integrated Gemini API to analyze job descriptions and generate tailored resumes dynamically",
-        "Implemented chatbot using Kommunicate SDK to simulate interview questions by job role",
-        "Built secure profile system with resume upload and job title storage in Firebase",
-        "Won 1st Runner-Up at Hackspectra hackathon (50+ teams)",
-      ],
-      cover: "/jobit.jpg",
-      demo: {
-        type: "appetize",
-        url: "https://appetize.io/app/b_fd7aymu3xjblrsjuyzgzakjqly",
-      },
-      repo: "https://github.com/Shubham-Rajurpalle/JobIt",
-      featured: true,
-      duration: "Mar 2025 - Apr 2025",
-    },
-    {
-      title: "DevFolio",
-      slug: "devfolio",
-      role: "Full Stack Web Developer",
-      short: "Full Stack Portfolio Web App with 3D animations and CMS",
-      tech: [
-        "React",
-        "Node.js",
-        "Express",
-        "MongoDB",
-        "TypeScript",
-        "Tailwind CSS",
-        "Three.js",
-      ],
-      highlights: [
-        "Delivered production-ready MERN portfolio using React, Node.js, Express, and MongoDB Atlas",
-        "Designed 3D interactive hero with glassmorphism, parallax tilt, and micro-animations",
-        "Integrated live app demos with Appetize.io and Expo Snack with responsive iframes",
-        "Built CMS-style admin panel with JWT authentication for project CRUD and Cloudinary uploads",
-        "Deployed with Vercel, Render, and MongoDB Atlas, optimized for SEO and performance",
-      ],
-      cover: "/devfolio.jpg",
-      repo: "https://github.com/Shubham-Rajurpalle/Devfolio",
-      liveUrl: "https://shubham-devfolio.vercel.app",
-      featured: true,
-      duration: "Aug 2025 - Present",
-      demo: {
-        type: "appetize",
-        url: "https://shubham-devfolio.vercel.app"
-      },
-    },
-    {
-      title: "OrderHub",
-      slug: "orderhub",
-      role: "React Native Developer",
-      short: "E-commerce Store Management System for Sellers",
-      tech: [
-        "React Native",
-        "Firebase",
-        "Firestore",
-        "Material Design",
-        "PhonePe Payment Integration",
-        "WhatsApp API",
-        "Telegram API",
-        "Real-Time Updates",
-      ],
-      highlights: [
-        "Collaborated with stakeholders to define app flows and create user journeys through detailed Figma wireframes",
-        "Designed intuitive UI screens following Google's Material Design system for cross-platform consistency",
-        "Planned multi-channel order management (WhatsApp, Telegram), PhonePe payment verification, and real-time updates",
-        "Focused on designing scalable flows, inspired by distributed system concepts",
-      ],
-      cover: "/orderhub.jpg",
-      demo: {
-        type: "appetize",
-        url: "https://appetize.io/app/b_inc3wwr2nmcjpzqivlnpkzrl64",
-      },
-      repo: "https://github.com/Shubham-Rajurpalle/OrderHub",
-      featured: true,
-      duration: "Dec 2024 - Jan 2025",
-    },
-  ];
+  return portfolioData.projects;
 }
-
 
 function getFallbackProfile(): Profile {
   return {
-    name: "Shubham Rajurpalle",
-    title: "Android & Full Stack Developer",
-    bio: "Mobile-first engineer specializing in Android and React Native development with expertise in building scalable applications.",
-    location: "Nanded, Maharashtra, India",
+    name: portfolioData.personal.fullName,
+    title: portfolioData.personal.title,
+    bio: portfolioData.personal.bio,
+    location: portfolioData.personal.location,
     contact: {
-      email: "rajurpalleshubham1802@gmail.com",
-      linkedin: "https://linkedin.com/in/shubham-rajurpalle",
-      github: "https://github.com/Shubham-Rajurpalle",
-      phone: "+91-9834583910",
+      email: portfolioData.contact.email,
+      linkedin: portfolioData.contact.linkedin,
+      github: portfolioData.contact.github,
+      phone: portfolioData.contact.phone,
     },
     resume: {
-      url: "/Goldman_sachs_Software_Engineer.pdf",
-      filename: "Goldman_sachs_Software_Engineer.pdf",
+      url: portfolioData.personal.resumePdf,
+      filename: "Damini_Gudape_Resume.pdf",
       uploadedAt: new Date(),
     },
     skills: [
-      "Android",
-      "Kotlin",
-      "React Native",
-      "Firebase",
+      "React.js",
       "Node.js",
-      "TypeScript",
+      "Express.js",
       "MongoDB",
+      "JavaScript",
+      "REST APIs",
+      "Tailwind CSS",
+      "JWT Auth",
     ],
-    experience: [],
-    education: [],
-    achievements: [],
+    experience: portfolioData.experience,
+    education: portfolioData.education.map((edu) => ({
+      institution: edu.institution,
+      degree: edu.degree,
+      cgpa: edu.score,
+      year: edu.duration,
+    })),
+    achievements: portfolioData.hackathons.map(
+      (h) => `${h.icon} ${h.award} - ${h.title}`
+    ),
     stats: {
-      gfgProblems: "460+",
-      maxRating: "1532",
-      rank: "Top 50",
-      youtubeSubscribers: "250K+",
+      gfgProblems: portfolioData.dsaStats.problemsSolved,
+      maxRating: portfolioData.dsaStats.maxRating,
+      rank: portfolioData.dsaStats.rank,
+      youtubeSubscribers: portfolioData.dsaStats.extraMetricValue,
     },
   };
 }
