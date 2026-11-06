@@ -97,7 +97,7 @@ export const portfolioData: PortfolioData = {
     bio: "Computer Science graduate (2026) and Full-Stack Developer experienced in React.js, Node.js, Express.js, and MongoDB. Passionate about building robust client-server architectures, payment integrations, and intuitive user experiences.",
     location: "Maharashtra, India",
     availableForOpportunities: true,
-    profilePhoto: "/profile-photo.jpg",
+    profilePhoto: "/damini-gudape.jpg",
     resumePdf: "/Damini_Gudape_Resume.pdf",
   },
 
