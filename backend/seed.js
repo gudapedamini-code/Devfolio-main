@@ -126,7 +126,7 @@ async function seed() {
           "Connected responsive frontend workflows with backend REST services; contributed to feature development, debugging, and deployment",
           "Built role-based dashboard with real-time data handling and reporting",
         ],
-        cover: "/fallback-hero.png",
+        cover: "/medical-vendor.png",
         demo: {
           type: "snack",
           url: "https://medical-vendor-web.vercel.app",
