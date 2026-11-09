@@ -342,11 +342,12 @@ export const portfolioData: PortfolioData = {
       ],
       cover: "/campuscore.jpg",
       repo: "https://github.com/gudapedamini-code",
+      liveUrl: "https://collage-chatbot-gamma.vercel.app/",
       featured: true,
       duration: "2025",
       demo: {
-        type: "none",
-        url: "",
+        type: "snack",
+        url: "https://collage-chatbot-gamma.vercel.app/",
       },
     },
     {
