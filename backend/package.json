@@ -16,7 +16,7 @@
     "express",
     "mongodb"
   ],
-  "author": "Shubham Rajurpalle",
+  "author": "Damini Ganesh Gudape",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",

@@ -18,8 +18,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://devfolio-six-omega.vercel.app",
-  "https://shubham-devfolio.vercel.app",
+  "https://devfolio-main-buj9.vercel.app",
 ].filter(Boolean);
 
 app.use(
@@ -192,22 +191,11 @@ async function initializeDefaultData() {
             "Built and deployed a MERN portfolio platform with JWT-protected admin access",
             "Integrated Cloudinary for image uploads and created responsive React components",
           ],
-          cover: "/fallback-hero.png",
+          cover: "/damini-gudape.jpg",
           repo: "https://github.com/gudapedamini-code/devfolio",
-          liveUrl: "https://devfolio-six-omega.vercel.app",
+          liveUrl: "https://devfolio-main-buj9.vercel.app/",
           featured: true,
           duration: "2025",
-        },
-      ]);
-    }
-          cover: "/static/fallback-hero.png",
-          demo: {
-            type: "appetize",
-            url: "https://appetize.io/app/b_inc3wwr2nmcjpzqivlnpkzrl64",
-          },
-          repo: "https://github.com/Shubham-Rajurpalle/Cric",
-          featured: true,
-          duration: "May 2024 - May 2025",
         },
       ]);
     }
@@ -369,19 +357,11 @@ app.get("/api/resume/download", async (req, res) => {
       });
     }
 
-    // Try different possible paths for the resume on Render
+    // Try different possible paths for the resume
     const possiblePaths = [
-      path.join(
-        __dirname,
-        "public",
-        "Software_engineer_shubham_rajurpalle.pdf"
-      ),
-      path.join(__dirname, "Software_engineer_shubham_rajurpalle.pdf"),
-      path.join(
-        __dirname,
-        "public",
-        profile.resume.url.replace("/static/", "")
-      ),
+      path.join(__dirname, "public", "Damini_Gudape_Resume.pdf"),
+      path.join(__dirname, "Damini_Gudape_Resume.pdf"),
+      path.join(__dirname, "public", profile.resume.filename || "Damini_Gudape_Resume.pdf"),
       path.join(__dirname, profile.resume.url.replace("/static", "public")),
     ];
 
@@ -399,13 +379,12 @@ app.get("/api/resume/download", async (req, res) => {
 
     // If file found on backend, serve it
     if (resumePath) {
-      res.download(resumePath, profile.resume.filename, (err) => {
+      res.download(resumePath, profile.resume.filename || "Damini_Gudape_Resume.pdf", (err) => {
         if (err) {
           console.error("❌ Error downloading resume:", err);
           // Fallback to frontend if backend download fails
-          const frontendResumeUrl = `${
-            process.env.FRONTEND_URL || "https://devfolio-six-omega.vercel.app"
-          }/Software_engineer_shubham_rajurpalle.pdf`;
+          const frontendResumeUrl = `${process.env.FRONTEND_URL || "https://devfolio-main-buj9.vercel.app"
+            }/Damini_Gudape_Resume.pdf`;
           console.log(
             `🔄 Backend download failed, redirecting to: ${frontendResumeUrl}`
           );
@@ -419,9 +398,8 @@ app.get("/api/resume/download", async (req, res) => {
 
     // If not found on backend, redirect to frontend
     console.log("❌ Resume file not found on backend, redirecting to frontend");
-    const frontendResumeUrl = `${
-      process.env.FRONTEND_URL || "https://devfolio-six-omega.vercel.app"
-    }/Software_engineer_shubham_rajurpalle.pdf`;
+    const frontendResumeUrl = `${process.env.FRONTEND_URL || "https://devfolio-main-buj9.vercel.app"
+      }/Damini_Gudape_Resume.pdf`;
     console.log(`🔗 Redirecting to frontend: ${frontendResumeUrl}`);
 
     res.redirect(frontendResumeUrl);
@@ -429,9 +407,8 @@ app.get("/api/resume/download", async (req, res) => {
     console.error("❌ Error fetching resume:", error);
 
     // Final fallback - redirect to frontend
-    const frontendResumeUrl = `${
-      process.env.FRONTEND_URL || "https://devfolio-six-omega.vercel.app"
-    }/Software_engineer_shubham_rajurpalle.pdf`;
+    const frontendResumeUrl = `${process.env.FRONTEND_URL || "https://devfolio-main-buj9.vercel.app"
+      }/Damini_Gudape_Resume.pdf`;
     console.log(
       `🔄 Server error, redirecting to frontend: ${frontendResumeUrl}`
     );
@@ -503,8 +480,7 @@ app.listen(PORT, () => {
   }
 
   console.log(
-    `📊 MongoDB status: ${
-      mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
+    `📊 MongoDB status: ${mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
     }`
   );
 });

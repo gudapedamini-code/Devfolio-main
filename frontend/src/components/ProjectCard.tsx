@@ -143,11 +143,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                 <motion.button
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (project.demo.type === "appetize") {
-                      window.open(project.demo.url, "_blank");
-                    } else {
-                      onClick?.();
-                    }
+                    window.open(project.demo.url, "_blank");
                   }}
                   className="group/btn flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 hover:scale-105 active:scale-95 flex-1 justify-center shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
                   whileHover={{ y: -2 }}

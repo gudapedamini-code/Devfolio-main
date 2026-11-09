@@ -192,11 +192,12 @@ async function seed() {
         ],
         cover: "/orderhub.jpg",
         repo: "https://github.com/gudapedamini-code",
+        liveUrl: "https://django-jewelry-shop-navy.vercel.app/",
         featured: true,
         duration: "2025",
         demo: {
-          type: "none",
-          url: "",
+          type: "snack",
+          url: "https://django-jewelry-shop-navy.vercel.app/",
         },
       },
       {
@@ -238,11 +239,12 @@ async function seed() {
         ],
         cover: "/jobit.jpg",
         repo: "https://github.com/gudapedamini-code",
+        liveUrl: "https://socially-nu-seven.vercel.app/",
         featured: true,
-        duration: "In Progress",
+        duration: "2026",
         demo: {
-          type: "none",
-          url: "",
+          type: "snack",
+          url: "https://socially-nu-seven.vercel.app/",
         },
       },
     ];
